@@ -1,0 +1,7 @@
+### THIS FILE IS MANAGED BY ANSIBLE  ###
+### CHANGES MADE TO THIS FILE MAY NOT PERSIST ###
+
+### RESOLVES CIS 1.1 && 3.5
+{% for item in DISABLE_MODULES %}
+install {{ item }} /bin/true
+{% endfor %}

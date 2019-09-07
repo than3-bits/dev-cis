@@ -1,0 +1,25 @@
+---
+
+DISABLE_MODULES:
+# Disable Modules for CIS Benchmark
+# Description:
+# This section disables problematic kernel modules using
+#  install <pkg> /bin/true
+# Modules may be deselected by commenting out the appropriate line.
+# Disable Uncommon Filesystems (1.1)
+  - cramfs
+#  - freevxfs
+  - jffs2
+  - hfs
+  - hfsplus
+  - udf
+# Disable Uncommon Network Protocols (3.5)
+  - dccp
+  - sctp
+  - rds
+  - tipc
+
+WORKSPACE_PATH: '/usr/local/etc/ans'
+
+TEMPLATE_FILES:
+  - 'cis.conf.*'

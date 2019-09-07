@@ -1,0 +1,46 @@
+---
+
+- hosts: all
+  vars_files:
+    - cis_vars.yml
+
+  tasks:
+
+  - name: check for workspace
+    stat:
+      path: "{{ WORKSPACE_PATH }}"
+    register: sym
+
+  - debug: { msg: "{{ sym }}" }
+
+  - name: create workspace dir if not exist
+    file:
+      path: "{{ WORKSPACE_PATH }}"
+      state: directory
+    when: sym.stat.exists == false
+    become: yes
+# AUDIT
+# CREATE/UPDATE
+  - name: Generate CIS.conf module blacklist
+    template:
+      backup: yes
+      src: templates/cis.j2
+      dest: /etc/modprobe.d/cis.conf
+    become: yes
+
+  - name: Find Ansible Backups for Cleanup
+    find:
+      paths: /etc/modprobe.d
+      patterns: "{{ item }}"
+    register: find_results
+    with_items: "{{ TEMPLATE_FILES }}"
+
+  - debug: { msg: "{{ find_results }}"}
+
+  - name: Move Template Backups from sensitive folders to
+    command: "mv {{item['path'] }} {{ WORKSPACE_PATH }}"
+    with_items: "{{ find_results['files'] }}"
+    become: yes
+    when: find_results['files'] is defined
+
+# CLEANUP TEMPLATE BACKUPS
