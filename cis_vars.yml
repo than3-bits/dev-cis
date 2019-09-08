@@ -2,6 +2,9 @@
 DISABLE_IPV6: no
 DISABLE_SYSCTL_BUGFIX: no
 
+Organization_Name: "Maniacal Overlords United"
+POLICY_URI: "http://bitst0rm.network/AURP"
+
 WORKSPACE_PATH: '/usr/local/etc/ans'
 
 TEMPLATE_FILES:

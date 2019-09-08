@@ -100,6 +100,23 @@
     shell: "df --local -P | grep -v 'snap' | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type d -perm -0002 2>/dev/null | xargs chmod a+t"
     become: yes
 
+# BANNER WARNINGS
+  - name: Set motd (postlogin)
+    template:
+      src: templates/banner.j2
+      dest: "{{ item }}"
+    with_items:
+     - /etc/motd
+     - /etc/issue
+     - /etc/issue.net
+    become: yes
+
+
+#  - name: Set issue (prelogin)
+
+#  - name: Set issue.net (prelogin remote)
+
+
 
 # CLEANUP TEMPLATE BACKUPS
 
