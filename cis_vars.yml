@@ -1,4 +1,6 @@
 ---
+DISABLE_IPV6: no
+
 
 DISABLE_MODULES:
 # Disable Modules for CIS Benchmark

@@ -1,15 +1,4 @@
-#1.1.1 Disable Unused Filesystems
 
-# cramfs | freevxfs | jffs2 | hfs | hfsplus
-# udf
-
-
-modprobe -n -v cramfs
-install /bin/true
-
-
-/etc/modprobe.d/CIS.conf
-install cramfs /bin/true
 
 #1.1.2a Setup Separate Partitions
 
@@ -223,15 +212,6 @@ net.ipv6.conf.default.accept_redirects (0)
 ipv6.disable=1
 audit=1
 
-# Disable Uncommon Network Protocols
-# modprobe -n -v <protocol>
-# /etc/modprobe.d/CIS.conf
-# install < > /bin/true
-List:
-dccp
-sctp
-rds
-tipc
 
 # Ensure iptables is installed
 

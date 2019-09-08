@@ -5,7 +5,7 @@
     - cis_vars.yml
 
   tasks:
-
+# PRELIM WORKSPACE SETUP (NEEDED FOR CLEANUP)
   - name: check for workspace
     stat:
       path: "{{ WORKSPACE_PATH }}"
@@ -19,7 +19,9 @@
       state: directory
     when: sym.stat.exists == false
     become: yes
+
 # AUDIT
+
 # CREATE/UPDATE
   - name: Generate CIS.conf module blacklist
     template:
@@ -28,6 +30,10 @@
       dest: /etc/modprobe.d/cis.conf
     become: yes
 
+
+
+# CLEANUP TEMPLATE BACKUPS
+
   - name: Find Ansible Backups for Cleanup
     find:
       paths: /etc/modprobe.d
@@ -35,12 +41,8 @@
     register: find_results
     with_items: "{{ TEMPLATE_FILES }}"
 
-  - debug: { msg: "{{ find_results }}"}
-
   - name: Move Template Backups from sensitive folders to
     command: "mv {{item['path'] }} {{ WORKSPACE_PATH }}"
     with_items: "{{ find_results['files'] }}"
     become: yes
     when: find_results['files'] is defined
-
-# CLEANUP TEMPLATE BACKUPS
