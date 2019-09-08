@@ -50,13 +50,6 @@
 # aa-enforce /etc/apparmor.d/<profile>
 # aa-complain /etc/apparmor.d/<profile>
 
-# Warning Banners
-# Name of the organization that owns the system
-# Subject to monitoring and that monitoring is in compliance with local status,
-# use of the system implies consent to such monitoring.
-# /etc/motd
-# /etc/issue (prelogin)
-# /etc/issue.net (pre.login)
 # permissions 644, root
 
 # gdm = 644 /etc/dconf/profile/gdm
