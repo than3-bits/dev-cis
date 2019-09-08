@@ -70,6 +70,7 @@ file-db:/usr/share/gdm/greeter-dconf-defaults
 # banner-message-text='the message'
 # run 'dconf update'
 
+# TODO
 # Check for inetd services
 # /etc/inetd.* (null return)
 # Disable
@@ -83,17 +84,8 @@ file-db:/usr/share/gdm/greeter-dconf-defaults
 # talk | ntalk | telnet | tftp
 
 
-Check for package installation
-#Install
-#List:
-dpkg -s chrony | ntp
-iptables
-rsyslog
-sshd
-
 #Check for enabled systemd services
 #Configure
-#List:
 Chrony|NTP
 auditd
 rsyslog ()
@@ -153,7 +145,6 @@ sshd
 
 
 # Check whether packages are installed
-# Remove packages
 # List:
 dpkg -s ldap-utils
 dpkg -s openbsd-inetd
@@ -170,34 +161,6 @@ dpkg -s telnet
 # Postfix Local-Delivery Only? (Page 134)
 
 #logs archived and digitally signed
-
-# Network Parameters
-
-Check sysctl options (sysctl.conf | sysctl.d/*):
-#changes need net.ipv4.route.flush=1
-sysctl [option] | sysctl -w [option] (writing)
-net.ipv4.conf.ip_forward (0)
-net.ipv4.conf.all.send_redirects (0)
-net.ipv4.conf.default.send_redirects (0)
-net.ipv4.conf.all.accept_source_route (0) [source routed packets]
-net.ipv4.conf.default.accept_source_route (0) ''
-net.ipv4.conf.all.accept_redirects (0) [ICMP redirect system routing]
-net.ipv4.conf.default.accept_redirects(0)
-net.ipv4.conf.all.secure_redirects (0) [From trusted gateways]
-net.ipv4.conf.default.secure_redirects (0)
-net.ipv4.conf.all.log_martians (1) [Log suspicious packets to kernel log]
-net.ipv4.conf.default.log_martians (1)
-net.ipv4.icmp_echo_ignore_broadcasts (1) [Prevent Smurf Attack]
-net.ipv4.icmp_ignore_bogus_error_responses [Prevent log resource exhaust attack]
-net.ipv4.conf.all.rp_filter (1) [Reverse Path Filtering]
-net.ipv4.tcp_syncookies (1) [Allow syn cookies during FLOOD]
-net.ipv6.conf.all.accept_ra (0) [ Yes = set static route]
-net.ipv6.conf.default.accept_ra (0)
-net.ipv6.conf.all.accept_redirects (0) [Accept ipv6 redirects]
-net.ipv6.conf.default.accept_redirects (0)
-
-# redirects may need cronjob sysctl -p ubuntu
-# crontab: @reboot root /bin/sleep 5 && /sbin/sysctl --system
 
 
 # If no ipv6

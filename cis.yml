@@ -20,12 +20,15 @@
     when: sym.stat.exists == false
     become: yes
 
+
 # AUDIT
   - name: Check for Enabled Services
     command: "systemctl is-enabled {{item}}"
     with_items: "{{ DEFAULT_ENABLED_SERVICES }}"
     ignore_errors: yes
     register: DEFAULT_ENABLED_SERVICES_STATE
+
+
 
 # CREATE/UPDATE
 #   INSTALL PACKAGES FROM CIS_VAR INSTALL LIST
@@ -57,8 +60,21 @@
       dest: /etc/sysctl.conf
     become: yes
 
+  - name: Configure sysctl.conf cronjob to address debian bug during reboot
+    cron:
+      name: "sysctl bug resolution"
+      special_time: reboot
+      job: "/bin/sleep 5 && /sbin/sysctl --system"
+      cron_file: '/etc/crontab'
+      user: root
+      state: present
+      disabled: "{{ DISABLE_SYSCTL_BUGFIX }}"
+      backup: yes
+    become: yes
+
   - name: Reload sysctl from config
     command: "sysctl --system"
+    become: yes
 
   - name: Enable default CIS systemd services
     service:
@@ -76,6 +92,13 @@
     become: yes
     ignore_errors: yes
 
+  - name: Disable Prelink
+    command: "prelink -ua"
+    ignore_errors: yes
+
+
+
+
 # CLEANUP TEMPLATE BACKUPS
 
   - name: Find Ansible Backups for Cleanup
@@ -85,7 +108,6 @@
       recurse: yes
     register: find_results
 
-  - debug: "{ msg: {{ find_results['files'] }} }"
   - name: Move Template Backups from sensitive folders to
     command: "mv {{item['path'] }} {{ WORKSPACE_PATH }}"
     with_items: "{{ find_results['files'] }}"

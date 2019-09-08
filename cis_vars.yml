@@ -1,5 +1,6 @@
 ---
 DISABLE_IPV6: no
+DISABLE_SYSCTL_BUGFIX: no
 
 WORKSPACE_PATH: '/usr/local/etc/ans'
 
