@@ -50,6 +50,16 @@
       dest: /etc/modprobe.d/cis.conf
     become: yes
 
+  - name: Generate sysctl.conf defaults
+    template:
+      backup: yes
+      src: templates/sysctl.conf.j2
+      dest: /etc/sysctl.conf
+    become: yes
+
+  - name: Reload sysctl from config
+    command: "sysctl --system"
+
   - name: Enable default CIS systemd services
     service:
       name: "{{ item }}"
@@ -70,11 +80,12 @@
 
   - name: Find Ansible Backups for Cleanup
     find:
-      paths: /etc/modprobe.d
-      patterns: "{{ item }}"
+      paths: '/etc'
+      patterns: "{{ TEMPLATE_FILES }}"
+      recurse: yes
     register: find_results
-    with_items: "{{ TEMPLATE_FILES }}"
 
+  - debug: "{ msg: {{ find_results['files'] }} }"
   - name: Move Template Backups from sensitive folders to
     command: "mv {{item['path'] }} {{ WORKSPACE_PATH }}"
     with_items: "{{ find_results['files'] }}"
