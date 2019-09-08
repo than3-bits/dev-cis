@@ -21,6 +21,10 @@
     become: yes
 
 # AUDIT
+  - name: Check for Enabled Services
+    command: "systemctl is-enabled {{item}}"
+    with_items: "{{ DEFAULT_ENABLED_SERVICES }}"
+    register: DEFAULT_ENABLED_SERVICES_STATE
 
 # CREATE/UPDATE
   - name: Generate CIS.conf module blacklist
@@ -30,6 +34,12 @@
       dest: /etc/modprobe.d/cis.conf
     become: yes
 
+  - name: Enable systemd services
+    service:
+      name: "{{ item }}"
+      state: restarted
+    with_items: "{{DEFAULT_ENABLED_SERVICES}}"
+    become: yes
 
 
 # CLEANUP TEMPLATE BACKUPS

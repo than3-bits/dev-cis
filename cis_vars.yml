@@ -1,6 +1,11 @@
 ---
 DISABLE_IPV6: no
 
+DEFAULT_ENABLED_SERVICES:
+  - ssh
+
+DEFAULT_DISABLED_SERVICES:
+  - autofs
 
 DISABLE_MODULES:
 # Disable Modules for CIS Benchmark
