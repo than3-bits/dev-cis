@@ -21,12 +21,6 @@
 // -type d -perm -0002 2>/dev/null | xargs chmod a+t
 
 
-1.1.21 (Disable Autofs)
-systemctl is-enabled autofs
-(disabled)
-set:
-systemctl disable autofs
-
 # Configure Package Management Repo
 # apt-cache policy
 

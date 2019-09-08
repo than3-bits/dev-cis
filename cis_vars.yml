@@ -3,9 +3,32 @@ DISABLE_IPV6: no
 
 DEFAULT_ENABLED_SERVICES:
   - ssh
+  - auditd
+  - rsyslog
+  - cron
+  - chrony
+#  - ntp
 
 DEFAULT_DISABLED_SERVICES:
   - autofs
+  - xinetd
+  - avahi-daemon
+  - cups
+  - isc-dhcp-server
+  - isc-dhcp-server6
+  - slapd
+  - nfs-server
+  - rpcbind
+  - bind9
+  - vsftpd
+  - apache2
+  - nginx
+  - dovecot
+  - smbd
+  - squid
+  - snmp
+  - rsync
+  - nis
 
 DISABLE_MODULES:
 # Disable Modules for CIS Benchmark
