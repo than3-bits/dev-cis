@@ -92,7 +92,7 @@ rsyslog
 sshd
 
 #Check for enabled systemd services
-#Install & Configure
+#Configure
 #List:
 Chrony|NTP
 auditd

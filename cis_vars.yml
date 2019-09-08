@@ -1,6 +1,21 @@
 ---
 DISABLE_IPV6: no
 
+WORKSPACE_PATH: '/usr/local/etc/ans'
+
+TEMPLATE_FILES:
+  - 'cis.conf.*'
+
+
+INSTALL_DEFAULT_PKGS:
+  - openssh-server
+  - auditd
+  - cron
+  - chrony
+  - rsyslog
+  - iptables
+#  - ntp
+
 DEFAULT_ENABLED_SERVICES:
   - ssh
   - auditd
@@ -48,8 +63,3 @@ DISABLE_MODULES:
   - sctp
   - rds
   - tipc
-
-WORKSPACE_PATH: '/usr/local/etc/ans'
-
-TEMPLATE_FILES:
-  - 'cis.conf.*'

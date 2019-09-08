@@ -28,13 +28,18 @@
     register: DEFAULT_ENABLED_SERVICES_STATE
 
 # CREATE/UPDATE
+  - name: Install Basic Packages
+    action: >
+      {{ ansible_pkg_mgr }} name={{ item }} state=present update_cache=yes
+    with_items: "{{ INSTALL_DEFAULT_PKGS }}"
+    become: yes
+
   - name: Generate CIS.conf module blacklist
     template:
       backup: yes
       src: templates/cis.j2
       dest: /etc/modprobe.d/cis.conf
     become: yes
-
 
   - name: Enable default CIS systemd services
     service:
