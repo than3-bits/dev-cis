@@ -6,6 +6,14 @@ WORKSPACE_PATH: '/usr/local/etc/ans'
 TEMPLATE_FILES:
   - 'cis.conf.*'
 
+REMOVE_DEFAULT_PKGS:
+  - ldap-utils
+  - openbsd-inetd
+  - nis
+  - rsh-client
+  - rsh-redone-client
+  - talk
+  - telnet
 
 INSTALL_DEFAULT_PKGS:
   - openssh-server

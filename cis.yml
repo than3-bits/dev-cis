@@ -28,11 +28,20 @@
     register: DEFAULT_ENABLED_SERVICES_STATE
 
 # CREATE/UPDATE
+#   INSTALL PACKAGES FROM CIS_VAR INSTALL LIST
   - name: Install Basic Packages
     action: >
       {{ ansible_pkg_mgr }} name={{ item }} state=present update_cache=yes
     with_items: "{{ INSTALL_DEFAULT_PKGS }}"
     become: yes
+
+#   REMOVE PACKAGES FROM CIS_VAR REMOVE LIST
+  - name: Remove Problematic Packages
+    action: >
+      {{ ansible_pkg_mgr }} name={{ item }} state=absent update_cache=yes
+    with_items: "{{ REMOVE_DEFAULT_PKGS }}"
+    become: yes
+    ignore_errors: yes
 
   - name: Generate CIS.conf module blacklist
     template:
