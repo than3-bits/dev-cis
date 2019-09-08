@@ -96,7 +96,9 @@
     command: "prelink -ua"
     ignore_errors: yes
 
-
+  - name: Set Sticky bit on world writables
+    shell: "df --local -P | grep -v 'snap' | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type d -perm -0002 2>/dev/null | xargs chmod a+t"
+    become: yes
 
 
 # CLEANUP TEMPLATE BACKUPS
