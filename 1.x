@@ -26,12 +26,6 @@
 # apt-cache policy
 
 
-# Install AIDE (disable preload)
-# aide aide-common
-#prelink -ua
-# crontab -u root -e
-# 0 5 * * * /usr/bin/aide --config /etc/aide/aide.conf --check
-
 #Set password on root (single user mode)
 # grep ^root:[*\!]: /etc/shadow
 # passwd root
