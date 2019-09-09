@@ -115,7 +115,7 @@
 #  - name: Set issue (prelogin) (stubbed)
 #  - name: Set issue.net (prelogin remote) (stubbed)
 
-# Process Hardening (depends: task-Generate sysctl.conf defaults )
+# Process Hardening (codepends: task-Generate sysctl.conf defaults )
   - name: Process Hardening (disable core dumps)
     template:
       backup: yes
