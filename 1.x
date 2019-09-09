@@ -117,13 +117,6 @@ sshd
 #logs archived and digitally signed
 
 
-# If no ipv6
-# Update Grub Boot Params
-#grub_cmdline_linux="ipv6.disable=1" && update-grub
-ipv6.disable=1
-audit=1
-
-
 # Ensure iptables is installed
 
 

@@ -3,6 +3,7 @@ DISABLE_IPV6: no
 GRUB_ENABLE_AUDIT: no
 DISABLE_SYSCTL_BUGFIX: no
 
+
 Organization_Name: "Maniacal Overlords United"
 POLICY_URI: "http://bitst0rm.network/AURP"
 
@@ -30,6 +31,8 @@ INSTALL_DEFAULT_PKGS:
   - chrony
   - rsyslog
   - iptables
+  - aide
+  - aide-common
 #  - ntp
 
 DEFAULT_ENABLED_SERVICES:
