@@ -79,6 +79,13 @@
 ### ANSIBLE MANAGED PORTION ###
 ### CHANGES IN THIS FILE MAY NOT PERSIST ###
 
+### NETWORK_HARDENING
 {% for item in SYS_NETWORK_PARAM %}
+  {{ item }}
+{% endfor %}
+
+### OTHER HARDENING ###
+
+{% for item in SYS_CORE_HARDENING %}
   {{ item }}
 {% endfor %}

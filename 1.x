@@ -13,6 +13,7 @@
 # mount -o remount, ^ {dir}
 
 # set sticky bit on all world writable directories
+# This will need follow-up snap directories appear world writable but are not?
 // validate
 // df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev
 // -type d \( -perm -0002 -a ! -perm -1000 \) 2>/dev/null
@@ -113,39 +114,6 @@ sshd
  -Restrict at/Cron to Authorized Users
  -
 
-
-# Check whether services are disabled
-# Disable Services
-# List:
-# xinetd
-# avahi-daemon
-# cups
-# isc-dhcp-server
-# isc-dhcp-server6
-# slapd
-# nfs-server
-# rpcbind
-# bind9
-# vsftpd
-# apache2
-# nginx
-# dovecot
-# smbd (samba)
-# squid
-# snmpd
-# rsync
-# nis
-
-
-# Check whether packages are installed
-# List:
-dpkg -s ldap-utils
-dpkg -s openbsd-inetd
-dpkg -s nis
-dpkg -s rsh-client
-dpkg -s rsh-redone-client
-dpkg -s talk
-dpkg -s telnet
 
 #Server - No X Window System
 # dpkg -l xserver-xorg*

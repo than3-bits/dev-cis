@@ -77,6 +77,7 @@ DISABLE_MODULES:
   - rds
   - tipc
 
+# SYSCTL
 SYS_NETWORK_PARAM:
   - net.ipv4.conf.ip_forward=0
   - net.ipv4.conf.all.send_redirects=0
@@ -97,3 +98,7 @@ SYS_NETWORK_PARAM:
   - net.ipv6.conf.default.accept_ra=0
   - net.ipv6.conf.all.accept_redirects=0
   - net.ipv6.conf.default.accept_redirects=0
+
+# SYSCTL disables core dumps (depends: template: security/limits.conf config)
+SYS_CORE_HARDENING:
+  - fs.suid_dumpable=0
