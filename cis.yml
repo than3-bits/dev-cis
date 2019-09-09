@@ -100,7 +100,7 @@
     shell: "df --local -P | grep -v 'snap' | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type d -perm -0002 2>/dev/null | xargs chmod a+t"
     become: yes
 
-# BANNER WARNINGS (LEGAL)
+# BANNER WARNINGS (LEGAL) (co-depends: banner.j2)
   - name: Set motd (postlogin)
     template:
       src: templates/banner.j2
@@ -115,7 +115,7 @@
 #  - name: Set issue (prelogin) (stubbed)
 #  - name: Set issue.net (prelogin remote) (stubbed)
 
-# Process Hardening (codepends: task-Generate sysctl.conf defaults )
+# Process Hardening (co-depends: task-Generate sysctl.conf defaults )
   - name: Process Hardening (disable core dumps)
     template:
       backup: yes
@@ -124,7 +124,34 @@
       mode: 0644
     become: yes
 
+# Update Grub boot parameters for audit
+  - name: Update GRUB_CMDLINE_LINUX
+    lineinfile:
+      state: present
+      dest: /etc/default/grub
+      backrefs: yes
+      regexp: '^(GRUB_CMDLINE_LINUX=(?!.*audit)\"[^\"]+)(\".*)'
+      line: '\1 audit=1\2'
+    register: UPDATE_GRUB
+    become: yes
+    when: GRUB_ENABLE_AUDIT == 'yes'
 
+# Update Grub boot parameters for ipv6
+  - name: Update GRUB_CMDLINE_LINUX
+    lineinfile:
+      state: present
+      dest: /etc/default/grub
+      backrefs: yes
+      regexp: '^(GRUB_CMDLINE_LINUX=(?!.*ipv6)\"[^\"]+)(\".*)'
+      line: '\1 ipv6.disable=1\2'
+    register: UPDATE_GRUB
+    when: DISABLE_IPV6 == 'yes'
+
+# Call Grub boot parameter update (co-depends: tasks: Update GRUB_CMDLINE_LINUX)
+  - name: Call Update-Grub
+    command: "update-grub"
+    become: yes
+    when: not UPDATE_GRUB is skipped or UPDATE_GRUB is not defined
 
 
 

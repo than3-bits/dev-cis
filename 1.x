@@ -36,13 +36,6 @@
 # grep ^root:[*\!]: /etc/shadow
 # passwd root
 
-# Process Hardening
-# grep "hard core" /etc/security/limits.conf /etc/security/limits.d/*
-# * hard core 0
-# sysctl fs.suid_dumpable
-# fs.suid_dumpable = 0
-# grep "fs\.suid_dumpable" /etc/sysctl.conf /etc/sysctl.d/*
-
 # Enable ASLR Page69
 # Enable XD/NX Page67
 # Uninstall Prelink dpkg -s prelink
