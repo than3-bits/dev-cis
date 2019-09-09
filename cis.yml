@@ -28,7 +28,17 @@
     ignore_errors: yes
     register: DEFAULT_ENABLED_SERVICES_STATE
 
+  - name: AUDIT| Single-User mode protected
+    command: "grep ^root:[*\\!]: /etc/shadow"
+    register: single_mode_check
+    become: yes
 
+  - set_fact:
+      AUDITREPORT_SINGLE_USER: 'FAIL'
+    when: single_mode_check.rc == 0
+
+  - debug: { msg: '{{ INSTALL_DEFAULT_PKGS }}'}
+    tags: test
 
 # CREATE/UPDATE
 #   INSTALL PACKAGES FROM CIS_VAR INSTALL LIST
@@ -103,7 +113,6 @@
   - name: AIDE| first-run initialization
     command: "aideinit"
     when: AIDE_FIRSTRUN == 'yes'
-    tags: test
 
   - name: AIDE| Configure cronjob for daily check
     cron:
