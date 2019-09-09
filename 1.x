@@ -26,10 +26,6 @@
 # apt-cache policy
 
 
-#Set password on root (single user mode)
-# grep ^root:[*\!]: /etc/shadow
-# passwd root
-
 # Enable ASLR Page69
 # Enable XD/NX Page67
 # Uninstall Prelink dpkg -s prelink
