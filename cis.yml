@@ -134,6 +134,13 @@
 #  - name: Set issue (prelogin) (stubbed)
 #  - name: Set issue.net (prelogin remote) (stubbed)
 
+  - name: Chrony| Time Synchronization Configuration
+    template:
+      src: templates/chrony.conf.j2
+      dest: "/etc/chrony/chrony.conf"
+      mode: 0644
+    become: yes
+
 # Process Hardening (co-depends: task-Generate sysctl.conf defaults )
   - name: Process Hardening (disable core dumps)
     template:

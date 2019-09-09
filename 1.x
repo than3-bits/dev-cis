@@ -66,8 +66,7 @@ sshd
 #Check configuration for services
 #Install & Configure
 #List:
- -Chrony or NTP
- - Auditd Rules (x32/64)
+  - Auditd Rules (x32/64)
     Timechange 32/64bit page203)
     User/Group Information Changes (pg205)
     Network Environment Changes
