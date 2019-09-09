@@ -2,7 +2,8 @@
 DISABLE_IPV6: no
 GRUB_ENABLE_AUDIT: no
 DISABLE_SYSCTL_BUGFIX: no
-
+AIDE_FIRSTRUN: no
+DISABLE_AIDE_CHECK: yes
 
 Organization_Name: "Maniacal Overlords United"
 POLICY_URI: "http://bitst0rm.network/AURP"

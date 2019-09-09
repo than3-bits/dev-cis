@@ -100,6 +100,25 @@
     shell: "df --local -P | grep -v 'snap' | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type d -perm -0002 2>/dev/null | xargs chmod a+t"
     become: yes
 
+  - name: AIDE| first-run initialization
+    command: "aideinit"
+    when: AIDE_FIRSTRUN == 'yes'
+    tags: test
+
+  - name: AIDE| Configure cronjob for daily check
+    cron:
+      name: "daily AIDE intrusion check"
+      minute: "0"
+      hour: "5"
+      job: "/usr/bin/aide --config /etc/aide/aide.conf --check"
+      cron_file: '/etc/crontab'
+      user: root
+      state: present
+      disabled: "{{ DISABLE_AIDE_CHECK }}"
+      backup: yes
+    become: yes
+
+
 # BANNER WARNINGS (LEGAL) (co-depends: banner.j2)
   - name: Set motd (postlogin)
     template:

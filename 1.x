@@ -46,16 +46,6 @@
 
 # permissions 644, root
 
-# gdm = 644 /etc/dconf/profile/gdm
-user-db:user
-system-db:gdm
-file-db:/usr/share/gdm/greeter-dconf-defaults
-
-# banner-message-enable banner-message-text
-# /etc/dconf/db/gdm.d/*
-# banner-message-enable=true
-# banner-message-text='the message'
-# run 'dconf update'
 
 # TODO
 # Check for inetd services
