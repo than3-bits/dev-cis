@@ -37,7 +37,7 @@
     set_fact:
       AUDITREPORT_SINGLE_USER: 'FAIL'
     when: single_mode_check is defined and single_mode_check.rc == 0
-    tags: test
+
 
 # CREATE/UPDATE
 #   INSTALL PACKAGES FROM CIS_VAR INSTALL LIST
@@ -239,6 +239,14 @@
     become: yes
     when: find_results['files'] is defined
 
+  - name: configure sudoers
+    template:
+      src: templates/sudoers.j2
+      dest: /etc/sudoers
+      validate: 'visudo -cf %s'
+      mode: 0440
+    become: yes
+    tags: test
 
 #### TODO ####
 
