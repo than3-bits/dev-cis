@@ -195,7 +195,6 @@
       - /etc/default/grub
       - /boot/grub/grub.cfg
     become: yes
-    tags: test
 
 # CLEANUP TEMPLATE BACKUPS
 
