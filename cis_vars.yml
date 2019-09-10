@@ -6,7 +6,7 @@ AIDE_FIRSTRUN: no
 DISABLE_AIDE_CHECK: yes
 
 # Specify 'ntp' or 'chrony' for time synchronization
-TIMESYNC: 'chrony'
+TIMESYNC: ''
 
 
 Organization_Name: "Maniacal Overlords United"
@@ -34,19 +34,19 @@ INSTALL_DEFAULT_PKGS:
   - openssh-server
   - auditd
   - cron
-  - "{{TIMESYNC}}"
   - rsyslog
   - iptables
   - aide
   - aide-common
-#  - ntp
+  - "{{TIMESYNC|default('chrony',true)}}"
+
 
 DEFAULT_ENABLED_SERVICES:
   - ssh
   - auditd
   - rsyslog
   - cron
-  - "{{TIMESYNC}}"
+  - "{{TIMESYNC|default('chrony',true)}}"
 
 
 DEFAULT_DISABLED_SERVICES:

@@ -37,9 +37,6 @@
       AUDITREPORT_SINGLE_USER: 'FAIL'
     when: single_mode_check.rc == 0
 
-  - debug: { msg: '{{ INSTALL_DEFAULT_PKGS }}'}
-    tags: test
-
 # CREATE/UPDATE
 #   INSTALL PACKAGES FROM CIS_VAR INSTALL LIST
   - name: Install Basic Packages
@@ -47,6 +44,10 @@
       {{ ansible_pkg_mgr }} name={{ item }} state=present update_cache=yes
     with_items: "{{ INSTALL_DEFAULT_PKGS }}"
     become: yes
+    tags: test
+
+  - debug: { msg: '{{ INSTALL_DEFAULT_PKGS }}'}
+    tags: test
 
 #   REMOVE PACKAGES FROM CIS_VAR REMOVE LIST
   - name: Remove Problematic Packages
