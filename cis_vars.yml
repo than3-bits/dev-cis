@@ -6,7 +6,7 @@ AIDE_FIRSTRUN: no
 DISABLE_AIDE_CHECK: yes
 
 # Specify 'ntp' or 'chrony' for time synchronization
-TIMESYNC: ''
+TIMESYNC: 'chrony'
 
 
 Organization_Name: "Maniacal Overlords United"
