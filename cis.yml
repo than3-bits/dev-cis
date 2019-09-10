@@ -44,10 +44,6 @@
       {{ ansible_pkg_mgr }} name={{ item }} state=present update_cache=yes
     with_items: "{{ INSTALL_DEFAULT_PKGS }}"
     become: yes
-    tags: test
-
-  - debug: { msg: '{{ INSTALL_DEFAULT_PKGS }}'}
-    tags: test
 
 #   REMOVE PACKAGES FROM CIS_VAR REMOVE LIST
   - name: Remove Problematic Packages
@@ -189,7 +185,17 @@
     become: yes
     when: not UPDATE_GRUB is skipped or UPDATE_GRUB is not defined
 
-
+  - name: Ensure permissions for grub are set correctly
+    file:
+      path: "{{item}}"
+      mode: '0400'
+      owner: root
+      group: root
+    with_items:
+      - /etc/default/grub
+      - /boot/grub/grub.cfg
+    become: yes
+    tags: test
 
 # CLEANUP TEMPLATE BACKUPS
 
