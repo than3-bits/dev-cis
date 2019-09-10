@@ -33,9 +33,11 @@
     register: single_mode_check
     become: yes
 
-  - set_fact:
+  - name: SET_FACT| FLAG FOR SINGLE-USER MODE NOT PROTECTED
+    set_fact:
       AUDITREPORT_SINGLE_USER: 'FAIL'
-    when: single_mode_check.rc == 0
+    when: single_mode_check is defined and single_mode_check.rc == 0
+    tags: test
 
 # CREATE/UPDATE
 #   INSTALL PACKAGES FROM CIS_VAR INSTALL LIST
@@ -206,8 +208,21 @@
       src: templates/audit.rules.j2
       dest: "/etc/audit/audit.rules"
       mode: '0600'
+      backup: yes
     become: yes
 
+  - name: Generate rsyslogd config
+    template:
+      src: templates/rsyslog.conf.j2
+      dest: /etc/rsyslog.conf
+      mode: '0644'
+      backup: yes
+    become: yes
+
+
+  - name: reload rsyslog rules
+    command: "pkill -HUP rsyslogd"
+    become: yes
 
 # CLEANUP TEMPLATE BACKUPS
 

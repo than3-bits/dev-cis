@@ -9,6 +9,11 @@ DISABLE_AIDE_CHECK: yes
 SELINUX: no
 APPARMOR: yes
 ARCH: 'amd64'
+# Leave empty ('') if no remote logging
+LOGHOST_URI: ''
+LOGHOST_TRANSPORT: 'tcp'
+LOGHOST_zlevel: '4'
+
 #ARCH: 'i686' for 32bit
 # Specify 'ntp' or 'chrony' for time synchronization
 
@@ -26,6 +31,8 @@ TEMPLATE_FILES:
   - cis.conf.*
   - sysctl.conf.*
   - limits.conf.*
+  - audit.rules.*
+  - rsyslog.conf.*
 
 REMOVE_DEFAULT_PKGS:
   - ldap-utils
