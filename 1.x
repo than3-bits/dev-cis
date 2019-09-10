@@ -53,7 +53,6 @@
 
 #Check for enabled systemd services
 #Configure
-Chrony|NTP
 auditd
 rsyslog ()
 cron daemon
