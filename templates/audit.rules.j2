@@ -1,0 +1,156 @@
+## MANAGED BY ANSIBLE ##
+## MANUAL CHANGES MADE TO THIS FILE MAY NOT PERSIST ##
+
+# AUDIT CONFIGURATION GENERATED FOR: {{ARCH}}
+
+
+{% if ARCH == 'amd64' %}
+# TIME CHANGES
+-a always,exit -F arch=b64 -S adjtimex -S settimeofday -k time-change
+-a always,exit -F arch=b32 -S adjtimex -S settimeofday -S stime -k time-change
+-a always,exit -F arch=b64 -S clock_settime -k time-change
+-a always,exit -F arch=b32 -S clock_settime -k time-change
+-w /etc/localtime -p wa -k time-change
+{% endif %}
+
+{% if ARCH == 'i686' %}
+# TIME CHANGES
+-a always,exit -F arch=b32 -S adjtimex -S settimeofday -S stime -k time-change
+-a always,exit -F arch=b32 -S clock_settime -k time-change
+-w /etc/localtime -p wa -k time-change
+{% endif %}
+
+# USER CHANGES
+-w /etc/group -p wa -k identity
+-w /etc/passwd -p wa -k identity
+-w /etc/gshadow -p wa -k identity
+-w /etc/shadow -p wa -k identity
+-w /etc/security/opasswd -p wa -k identity
+
+{% if ARCH == 'amd64' %}
+# SYSTEM ENVIRONMENT CHANGES
+-a always,exit -F arch=b64 -S sethostname -S setdomainname -k system-locale
+-a always,exit -F arch=b32 -S sethostname -S setdomainname -k system-locale
+-w /etc/issue -p wa -k system-locale
+-w /etc/issue.net -p wa -k system-locale
+-w /etc/hosts -p wa -k system-locale
+-w /etc/network/interfaces -p wa -k system-locale
+{% endif %}
+
+{% if ARCH == 'i686' %}
+# SYSTEM ENVIRONMENT CHANGES
+-a always,exit -F arch=b32 -S sethostname -S setdomainname -k system-locale
+-w /etc/issue -p wa -k system-locale
+-w /etc/issue.net -p wa -k system-locale
+-w /etc/hosts -p wa -k system-locale
+-w /etc/network/interfaces -p wa -k system-locale
+{% endif %}
+
+{% if SELINUX == 'yes'%}
+# SELINUX CHANGES
+-w /etc/selinux/ -p wa -k MAC-policy
+-w /usr/share/selinux/ -p wa -k MAC-policy
+{% endif %}
+
+{% if APPARMOR == 'yes' %}
+# APPARMOR CHANGES
+-w /etc/apparmor/ -p wa -k MAC-policy
+-w /etc/apparmor.d/ -p wa -k MAC-policy
+{% endif %}
+
+# LOGINS
+-w /var/log/faillog -p wa -k logins
+-w /var/log/lastlog -p wa -k logins
+-w /var/log/tallylog -p wa -k logins
+
+# SESSION INFO
+-w /var/run/utmp -p wa -k session
+-w /var/log/wtmp -p wa -k logins
+-w /var/log/btmp -p wa -k logins
+
+
+
+{% if ARCH == 'amd64' %}
+# DACL PERMISSION CHANGES
+-a always,exit -F arch=b32 -S chmod -S fchmod -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod
+-a always,exit -F arch=b64 -S chmod -S fchmod -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod
+-a always,exit -F arch=b32 -S chown -S fchown -S fchownat -S lchown -F auid>=1000 -F auid!=4294967295 -k perm_mod
+-a always,exit -F arch=b64 -S chown -S fchown -S fchownat -S lchown -F auid>=1000 -F auid!=4294967295 -k perm_mod
+-a always,exit -F arch=b32 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
+-a always,exit -F arch=b64 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
+{% endif %}
+
+{% if ARCH == 'i686' %}
+# DACL PERMISSION CHANGES
+-a always,exit -F arch=b32 -S chmod -S fchmod -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod
+-a always,exit -F arch=b32 -S chown -S fchown -S fchownat -S lchown -F auid>=1000 -F auid!=4294967295 -k perm_mod
+-a always,exit -F arch=b32 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
+{% endif %}
+
+{% if ARCH == 'i686' %}
+# LOG UNSUCCESSFUL UNAUTHORIZED ACCESS ATTEMPTS
+-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
+-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
+{% endif %}
+
+{% if ARCH == 'amd64' %}
+# LOG UNSUCCESSFUL UNAUTHORIZED ACCESS ATTEMPTS
+-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
+-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
+-a always,exit -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
+-a always,exit -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
+{% endif %}
+
+{% if LOG_PROG_EXECUTE != '' %}
+# LOG PRIVILEGED PROGRAM-USE
+{% for item in LOG_PROG_EXECUTE.stdout_lines %}
+{{item}}
+{% endfor %}
+{% endif %}
+
+{% if ARCH == 'amd64' %}
+# LOG SUCCESSFUL MOUNT OPERATIONS
+-a always,exit -F arch=b64 -S mount -F auid>=1000 -F auid!=4294967295 -k mounts
+-a always,exit -F arch=b32 -S mount -F auid>=1000 -F auid!=4294967295 -k mounts
+{% endif %}
+
+{% if ARCH == 'i686' %}
+# LOG SUCCESSFUL MOUNT OPERATIONS
+-a always,exit -F arch=b32 -S mount -F auid>=1000 -F auid!=4294967295 -k mounts
+{% endif %}
+
+{% if ARCH == 'amd64' %}
+# LOG FILE DELETIONS
+-a always,exit -F arch=b64 -S unlink -S unlinkat -S rename -S renameat -F auid>=1000 -F auid!=4294967295 -k delete
+-a always,exit -F arch=b32 -S unlink -S unlinkat -S rename -S renameat -F auid>=1000 -F auid!=4294967295 -k delete
+{% endif %}
+
+{% if ARCH == 'i686' %}
+# LOG FILE DELETIONS
+-a always,exit -F arch=b32 -S unlink -S unlinkat -S rename -S renameat -F auid>=1000 -F auid!=4294967295 -k delete
+{% endif %}
+
+# LOG CHANGES TO SUDOERS
+-w /etc/sudoers -p wa -k scope
+-w /etc/sudoers.d/ -p wa -k scope
+
+# LOG sudolog
+-w /var/log/sudo.log -p wa -k actions
+
+{% if ARCH == 'amd64' %}
+-w /sbin/insmod -p x -k modules
+-w /sbin/rmmod -p x -k modules
+-w /sbin/modprobe -p x -k modules
+-a always,exit -F arch=b32 -S init_module -S delete_module -k modules
+-a always,exit -F arch=b64 -S init_module -S delete_module -k modules
+{% endif %}
+
+{% if ARCH == 'i686' %}
+-w /sbin/insmod -p x -k modules
+-w /sbin/rmmod -p x -k modules
+-w /sbin/modprobe -p x -k modules
+-a always,exit -F arch=b32 -S init_module -S delete_module -k modules
+{% endif %}
+
+# Set immutable mode (all changes require reboot)
+-e 2

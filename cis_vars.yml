@@ -5,7 +5,13 @@ DISABLE_SYSCTL_BUGFIX: no
 AIDE_FIRSTRUN: no
 DISABLE_AIDE_CHECK: yes
 
+# Impacts auditd config template
+SELINUX: no
+APPARMOR: yes
+ARCH: 'amd64'
+#ARCH: 'i686' for 32bit
 # Specify 'ntp' or 'chrony' for time synchronization
+
 TIMESYNC: 'chrony'
 
 
