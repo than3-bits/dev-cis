@@ -200,11 +200,6 @@
     shell: "find / -xdev \\( -perm -4000 -o -perm -2000 \\) -type f | awk '{print \"-a always,exit -F path=\" $1 \" -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileges\"}'"
     register: LOG_PROG_EXECUTE
     become: yes
-    tags: test
-
-
-  - debug: {msg : "{{LOG_PROG_EXECUTE.stdout}}" }
-    tags: test
 
   - name: Generate auditd config
     template:
@@ -212,7 +207,6 @@
       dest: "/etc/audit/audit.rules"
       mode: '0600'
     become: yes
-    tags: test
 
 
 # CLEANUP TEMPLATE BACKUPS
