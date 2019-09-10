@@ -53,7 +53,6 @@
 
 #Check for enabled systemd services
 #Configure
-auditd
 rsyslog ()
 cron daemon
 sshd
