@@ -61,22 +61,6 @@ sshd
 #Check configuration for services
 #Install & Configure
 #List:
-  - Auditd Rules (x32/64)
-    Timechange 32/64bit page203)
-    User/Group Information Changes (pg205)
-    Network Environment Changes
-    AppArmor Changes
-    Login/Logout Events
-    Session Initiation Information
-    Log DACL permission modifications
-    Log Unauthorized Access Attempts (pg219)
-    Log Privileged Commands (pg 221)
-    Log Successful File System Mounts (pg 223)
-    Log File Deletion Events
-    Log Changes to Sudoers
-    Log system administrator actions (sudolog)
-    Log kernel module load/unload
-    Ensure auditd configuration is immutable (pg233)
  -Rsyslogd
     logging & log permissions(page 237)
     remote logging
