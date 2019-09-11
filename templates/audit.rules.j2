@@ -152,5 +152,9 @@
 -a always,exit -F arch=b32 -S init_module -S delete_module -k modules
 {% endif %}
 
+-a always,exit -F arch=b64 -F euid=0 -S execve -k rootcmd
+-a always,exit -F arch=b32 -F euid=0 -S execve -k rootcmd
+-a always,exit -S all -F euid=0 -F perm=awx -k rootcmd
+
 # Set immutable mode (all changes require reboot)
 -e 2

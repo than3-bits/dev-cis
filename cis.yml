@@ -122,7 +122,7 @@
       cron_file: '/etc/crontab'
       user: root
       state: present
-      disabled: "{{ DISABLE_AIDE_CHECK }}"
+      disabled: "{{ DISABLE_CRON_AIDE_CHECK }}"
       backup: yes
     become: yes
 
@@ -158,34 +158,22 @@
       mode: 0644
     become: yes
 
-# Update Grub boot parameters for audit
-  - name: Update GRUB_CMDLINE_LINUX
-    lineinfile:
-      state: present
+# Update Grub boot parameters
+  - name: "/etc/default/grub| Updating File"
+    template:
+      src: templates/grub.j2
       dest: /etc/default/grub
-      backrefs: yes
-      regexp: '^(GRUB_CMDLINE_LINUX=(?!.*audit)\"[^\"]+)(\".*)'
-      line: '\1 audit=1\2'
-    register: UPDATE_GRUB
+      mode: 0644
+      backup: yes
     become: yes
-    when: GRUB_ENABLE_AUDIT == 'yes'
-
-# Update Grub boot parameters for ipv6
-  - name: Update GRUB_CMDLINE_LINUX
-    lineinfile:
-      state: present
-      dest: /etc/default/grub
-      backrefs: yes
-      regexp: '^(GRUB_CMDLINE_LINUX=(?!.*ipv6)\"[^\"]+)(\".*)'
-      line: '\1 ipv6.disable=1\2'
     register: UPDATE_GRUB
-    when: DISABLE_IPV6 == 'yes'
 
 # Call Grub boot parameter update (co-depends: tasks: Update GRUB_CMDLINE_LINUX)
   - name: Call Update-Grub
     command: "update-grub"
     become: yes
     when: not UPDATE_GRUB is skipped or UPDATE_GRUB is not defined
+
 
   - name: Ensure permissions for grub are set correctly
     file:
@@ -206,7 +194,7 @@
   - name: Generate auditd config
     template:
       src: templates/audit.rules.j2
-      dest: "/etc/audit/audit.rules"
+      dest: "/etc/audit/rules.d/cis.rules"
       mode: '0600'
       backup: yes
     become: yes
@@ -224,6 +212,15 @@
     command: "pkill -HUP rsyslogd"
     become: yes
 
+  - name: configure sudoers
+    template:
+      src: templates/sudoers.j2
+      dest: /etc/sudoers
+      validate: 'visudo -cf %s'
+      mode: 0440
+    become: yes
+
+
 # CLEANUP TEMPLATE BACKUPS
 
   - name: Find Ansible Backups for Cleanup
@@ -232,22 +229,18 @@
       patterns: "{{ TEMPLATE_FILES }}"
       recurse: yes
     register: find_results
+    tags: test
+    become: yes
 
   - name: Move Template Backups from sensitive folders to
     command: "mv {{item['path'] }} {{ WORKSPACE_PATH }}"
     with_items: "{{ find_results['files'] }}"
     become: yes
     when: find_results['files'] is defined
-
-  - name: configure sudoers
-    template:
-      src: templates/sudoers.j2
-      dest: /etc/sudoers
-      validate: 'visudo -cf %s'
-      mode: 0440
-    become: yes
     tags: test
 
+  - debug: { msg: "{{find_results}}" }
+    tags: test
 #### TODO ####
 
 # Only for XWindows/Wayland Systems

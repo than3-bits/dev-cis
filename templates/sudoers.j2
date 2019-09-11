@@ -12,7 +12,7 @@ Defaults	secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/b
 # Log Sudoers
 Defaults log_host, log_year
 Defaults log_input, log_output, logfile="/var/log/sudo.log"
-
+Defaults iolog_dir=/var/log/sudo-io/%{user}
 
 # Host alias specification
 
@@ -24,7 +24,7 @@ Defaults log_input, log_output, logfile="/var/log/sudo.log"
 root	ALL=(ALL:ALL) ALL
 
 # Members of the admin group may gain root privileges
-%admin ALL=(ALL) ALL
+%admin ALL=(ALL) LOG_INPUT : LOG_OUTPUT: ALL
 
 # Allow members of group sudo to execute any command
 %sudo	ALL=(ALL:ALL) ALL
